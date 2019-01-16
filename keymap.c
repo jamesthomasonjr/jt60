@@ -12,11 +12,55 @@ enum layers {
   _CONTROL,
 };
 
-#ifdef AUDIO_ENABLE
+const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(
+  UCIS_SYM("poop", 0x1F4A9), // 💩
+  UCIS_SYM("shit", 0x1F4A9), // 💩
+  UCIS_SYM("hankey", 0x1F4A9), // 💩
+  UCIS_SYM("rofl", 0x1F923), // 🤣
+  UCIS_SYM("cool", 0x1F60E), //😎
+  UCIS_SYM("vomit", 0x1F92E), //🤮
+  UCIS_SYM("vomit2", 0x1F922), //🤢
+  UCIS_SYM("sleep", 0x1F62A),  //😪
+  UCIS_SYM("sleep2", 0x1F634),  //😴
+  UCIS_SYM(":*", 0x1F617),  //😗
+  UCIS_SYM(":*2", 0x1F618), //😘
+  UCIS_SYM(":p", 0x1F61D),  //😛
+  UCIS_SYM("<3", 0x2764),  //❤
+  UCIS_SYM("love", 0x2764),  //❤
+  UCIS_SYM("ok", 0x1F44C),  //👌
+  UCIS_SYM("ok2", 0x1F44D),  //👌
+  UCIS_SYM("+1", 0x1F44D),  //👍
+  UCIS_SYM("like", 0x1F44D),  //👍
+  UCIS_SYM("dislike", 0x1F44D),  //👎
+  UCIS_SYM("this", 0x1F446),  //👆
+  UCIS_SYM("that", 0x1F446),  //👆
+  UCIS_SYM("fu", 0x1F595),  //🖕
+  UCIS_SYM("dead", 0x1F480),  //💀
+  UCIS_SYM("punch", 0x1F44A),  //👊
+  UCIS_SYM("fistbump", 0x1F44A),  //👊
+  UCIS_SYM("clap", 0x1F44F),  //👏
+  UCIS_SYM("pancakes", 0x1F95E),  //🥞
+  UCIS_SYM("coffee", 0x2615),  //☕
+  UCIS_SYM("beer", 0x1F37A),  //🍺
+  UCIS_SYM("beers", 0x1F37B),  //🍻
+  UCIS_SYM("clink", 0x1F37B),  //🍻
+  UCIS_SYM("whiskey", 0x1F943),  //🥃
+  UCIS_SYM("tumbler", 0x1F943),  //🥃
+  UCIS_SYM("ship", 0x1F6A2),  //🚢
+  UCIS_SYM("shipit", 0x1F6A2),  //🚢
+  UCIS_SYM("trash", 0x1F5D1),  //🗑
+  UCIS_SYM("garbage", 0x1F5D1), //🗑
+  UCIS_SYM("fire", 0x1F525), //🔥
+  UCIS_SYM("flaming", 0x1F525), //🔥
+  UCIS_SYM("hottip", 0x1F525) //🔥
+);
+
 enum keycodes {
-  ALLSTAR = SAFE_RANGE,
-};
+  UNICODE = SAFE_RANGE,
+#ifdef AUDIO_ENABLE
+  ALLSTAR,
 #endif
+};
 
 #ifdef AUDIO_ENABLE
   // No audio support on the DZ60 :(
@@ -60,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TAB,           KC_Q,    KC_W,   KC_E,   KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,     KC_LBRC,  KC_RBRC, KC_BSLS,
 		KC_SRCH,          KC_A,    KC_S,   KC_D,   KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN,  KC_QUOT,  KC_ENT,
 		KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLASH, KC_RSFT,  KC_UP,    KC_LEAD,
-		KC_LCTL, KC_LALT, KC_LGUI,         TO_VIM,          MO__FNCN,         KC_SPC,  KC_RGUI, KC_RALT,  KC_LEFT,  KC_DOWN,  KC_RGHT),
+		KC_LCTL, KC_LALT, KC_LGUI,         UNICODE,         MO__FNCN,         KC_SPC,  KC_RGUI, KC_RALT,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
   // @TODO: This should be normal so the keyboard's fake vim modes don't mess with real vim commands
 	[_VIM] = LAYOUT_directional(
@@ -86,8 +130,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____),
 };
 
+void eeconfig_init_user(void) {
+  set_unicode_input_mode(UC_OSX);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case UNICODE:
+      qk_ucis_start();
+      return false;
+      break;
 #ifdef AUDIO_ENABLE
     case ALLSTAR:
       PLAY_SONG(sg_allstr);
