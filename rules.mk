@@ -1,5 +1,4 @@
 # Turn all this stuff off to make room for more important things... Like an emoji map.
-BOOTMAGIC_ENABLE = no
 MOUSEKEY_ENABLE = no
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
@@ -8,6 +7,9 @@ BACKLIGHT_ENABLE = no
 RGBLIGHT_ENABLE = no
 AUTO_SHIFT_ENABLE = no
 TAP_DANCE_ENABLE = no
+
+# But a bootloader is useful in case I screw the keymap up...
+BOOTMAGIC_ENABLE = lite
 
 # My next keyboard needs a speaker...
 AUDIO_ENABLE = no
