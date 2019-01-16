@@ -36,6 +36,7 @@ enum keycodes {
 #define TO_VIM  TO(_VIM)
 #define MO__FNCN MO(_FUNCTIONS)
 #define MO__CTRL MO(_CONTROL)
+#define KC_FULL LCTL(LGUI(KC_F))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -73,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_FUNCTIONS] = LAYOUT_directional(
 		____, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, ____, ____, ____, KC_DEL,
 		____, ____, ____, KC_END, ____, ____, ____, KC_PGUP, ____, ____, KC_MPLY, KC_MRWD, KC_MFFD, KC_INS,
-		____, ____, ____, KC_PGDN, ____, ____, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, ____, ____, ____,
+		____, ____, ____, KC_PGDN, KC_FULL, ____, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, ____, ____, ____,
 		____, ____, ____, ____, ____, KC_HOME, ____, KC__MUTE, KC__VOLDOWN, KC__VOLUP, ____, ____, ____, MO__CTRL,
 		____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____),
 
