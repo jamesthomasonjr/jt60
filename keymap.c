@@ -5,6 +5,8 @@
 
 #include QMK_KEYBOARD_H
 
+#define LEADER_TIMEOUT 250
+
 enum layers {
   _NORMAL = 0,
   _VIM,
@@ -94,15 +96,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |-----------------------------------------------------------------------------------------+
 * | Shift     |  Z  |  X  |  C  |  V  |  B  |  N  |  M  |  ,  |  .  |  /  | RSh | Up  | Ldr |
 * |-----------------------------------------------------------------------------------------+
-* | Ctrl  |  Alt |  Cmd |     Vim     | Fncn  |     Space     | Cmd | Alt |Left |Down |Rght |
+* | Ctrl  |  Alt |  Cmd |    Space    | Fncn  |     Space     | Cmd | Alt |Left |Down |Rght |
 * `-----------------------------------------------------------------------------------------'
 */
 
   // @TODO: This should mimic vim's modes for vim goodness everywhere
+  // @TODO: Look into setting space cadet timeouts, because I apparently hold the enter key too long and it's treated like a shift 50% of the time.
 	[_NORMAL] = LAYOUT_directional(
 		KC_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS,  KC_EQL,   KC_GRV,   KC_BSPC,
 		KC_TAB,           KC_Q,    KC_W,   KC_E,   KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,     KC_P,     KC_LBRC,  KC_RBRC, KC_BSLS,
-		KC_SRCH,          KC_A,    KC_S,   KC_D,   KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN,  KC_QUOT,  KC_SFTENT,
+		KC_SRCH,          KC_A,    KC_S,   KC_D,   KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,     KC_SCLN,  KC_QUOT,  KC_ENT,
 		KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLASH, KC_RSFT,  KC_UP,    KC_LEAD,
 		KC_LCTL, KC_LALT, KC_LGUI,         UNICODE,         MO__FNCN,         KC_SPC,  KC_RGUI, KC_RALT,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
@@ -134,11 +137,24 @@ void eeconfig_init_user(void) {
   set_unicode_input_mode(UC_OSX);
 }
 
+/* LEADER_EXTERNS(); */
+
+/* void matrix_scan_user(void) { */
+/*   leader_dictionary() { */
+/*     leading = false; */
+/*     leader_end(); */
+
+/*     seq_one_key(kc_spc) { */
+/*       qk_ucis_start(); */
+/*     } */
+/*   } */
+/* } */
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case UNICODE:
-      qk_ucis_start();
-      return false;
+      // gesc doesn't work, only esc...
+      // qk_ucis_start();
       break;
 #ifdef AUDIO_ENABLE
     case ALLSTAR:

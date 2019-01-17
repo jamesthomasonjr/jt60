@@ -9,14 +9,15 @@ AUTO_SHIFT_ENABLE = no
 TAP_DANCE_ENABLE = no
 
 # But a bootloader is useful in case I screw the keymap up...
+# Also, be very careful with this. Spent an hour debugging why BKSPC and BSLS were swapped...
 BOOTMAGIC_ENABLE = lite
 
 # My next keyboard needs a speaker...
 AUDIO_ENABLE = no
 
 # Unicode support. Using UCIS for mnemonics instead of numbers.
-UNICODE_ENABLE = no
-UNICODEMAP_ENABLE = no
+# UNICODE_ENABLE = no
+# UNICODEMAP_ENABLE = no
 UCIS_ENABLE = yes
 
 EXTRAKEY_ENABLE = yes
